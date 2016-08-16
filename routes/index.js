@@ -2,7 +2,10 @@ var express = require('express');
 var router = express.Router();
 
 var cycledates = require('../public/javascripts/cycledates.js');
+var convertjson = require('../public/javascripts/convertjson.js');
 var generatecsv = require('../public/javascripts/generatecsv.js');
+
+var jdates = require('../public/json/cdates.json');
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
@@ -10,10 +13,17 @@ router.get('/', function(req, res, next) {
 });
 
 router.post('/getcsv', function(req, res, next) {
-  var cdates = cycledates(req.body.cycledays);
+	var cdates;
+
+	if (req.body.cycledays != '') {
+		cdates = cycledates(req.body.cycledays);
+	} else {
+		cdates = convertjson(jdates);
+	}
+
   var masterstr = generatecsv(req.body.timetable, cdates);
 
-  // res.set({'Content-Disposition': 'attachment; filename=\'timetable.csv\''});
+  res.set({'Content-Disposition': 'attachment; filename=\'timetable.csv\''});
   res.send(masterstr);
 });
 
