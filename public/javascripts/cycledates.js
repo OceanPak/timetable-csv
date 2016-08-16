@@ -1,5 +1,7 @@
 // Convert cycle dates to dictionary
 
+var fridays = require('../json/fridays.json');
+
 module.exports = function(cycledays) {
   var stod = {
     Jan: [0, 2017],
@@ -15,38 +17,47 @@ module.exports = function(cycledays) {
     Nov: [10, 2016],
     Dec: [11, 2016]
   };
-  
+
   var lines = cycledays.split("\r\n");
-  
+
+	for (var i = 0; i < fridays.length; i++) {
+		for (var j = 0; j < fridays[i].length; j++) {
+			if (fridays[i][j] != '') {
+				lines[i] += fridays[i][j];
+				lines[i] += '   ';
+			}
+		}
+	}
+
   var cycledates = {};
-  
-  for (var i = 0; i < lines.length; i++) {
+
+  for (i = 0; i < lines.length; i++) {
     var s = lines[i].split("\t");
-    
+
     var day = s[0].split(" ")[1];
-    
+
     var dates = s[1].split("   ");
-    
+
     for (var j = 0; j < dates.length; j++) {
       if (dates[j] == "") {
         dates.splice(j, 1);
       }
     }
-    
+
     var odatearr = [];
-    
+
     for (var j = 0; j < dates.length; j++) {
       var comps = dates[j].split(" ");
       var y = stod[comps[2]][1];
       var m = stod[comps[2]][0];
       var d = parseInt(comps[1], 10);
       var odate = new Date(y, m, d);
-      
+
       odatearr.push(odate);
     }
-    
+
     cycledates[day] = odatearr;
   }
-  
+
   return cycledates;
 };
