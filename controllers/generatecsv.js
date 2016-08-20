@@ -1,5 +1,6 @@
-module.exports = function(timetable, cdates) {
-  var periodtimes = [
+module.exports = function(timetable, cdates, activities) {
+
+	var periodtimes = [
     ['07:55:00', '09:15:00'],
     ['09:20:00', '10:35:00'],
     ['10:40:00', '11:05:00'],
@@ -82,6 +83,42 @@ module.exports = function(timetable, cdates) {
       }
     }
   }
+
+	var activitiesPeriodTimes = [
+		['07:55:00', '09:15:00'],
+    ['09:20:00', '10:35:00'],
+    ['10:40:00', '11:05:00'],
+    ['11:05:00', '11:30:00'],
+    ['11:35:00', '12:50:00'],
+		['13:00:00', '13:40:00'],
+    ['13:45:00', '15:00:00'],
+		['15:15:00', '16:15:00'],
+		['16:15:00', '17:00:00']
+	];
+
+	for (i = 0; i < activities.length; i++) {
+		var activity = activities[i];
+
+		if (isNaN(activity.day)) {
+			var dates = cdates[activity.day.toUpperCase()];
+
+			for (var j = 0; j < dates.length; j++) {
+				d = dates[j];
+
+				var subject = activity.name;
+				var startDate = '' + (d.getMonth() + 1) + '/' + d.getDate() + '/' + d.getFullYear();
+				var startTime = activitiesPeriodTimes[activity.startPeriod][0];
+				var endDate = startDate;
+				var endTime = activitiesPeriodTimes[activity.endPeriod][1];
+				var location = activity.location;
+				var description = '';
+				var allDayEvent = 'False';
+
+				var s = subject + ',' + startDate + ',' + startTime + ',' + endDate + ',' + endTime + ',' + location + ',' + description + ',' + allDayEvent + '\n';
+				masterstr += s;
+			}
+		}
+	}
 
   return masterstr;
 };

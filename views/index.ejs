@@ -30,6 +30,8 @@
 			<div ng-repeat='activityInput in activityInputs'>
 				<input type='text' ng-model='activityInput.name' placeholder='Activity/meeting name'>
 
+				<input type='text' ng-model='activityInput.location' placeholder='Location (optional)'>
+
 				<select ng-model='activityInput.day'>
 					<option value='' disabled selected>Activity/meeting day</option>
 					<option value='0'>Monday</option>

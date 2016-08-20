@@ -5,11 +5,11 @@ angular.module('timetableCsv')
 
 		$scope.cycledays = '';
 		$scope.timetable = '';
-		$scope.activityInputs = [{id: inputIdCount, day: '', startPeriod: '', endPeriod: ''}];
+		$scope.activityInputs = [{id: inputIdCount, name: '', location: '', day: '', startPeriod: '', endPeriod: ''}];
 
 		$scope.addActivityInput = function() {
 			inputIdCount++;
-			$scope.activityInputs.push({id: inputIdCount, day: '', startPeriod: '', endPeriod: ''});
+			$scope.activityInputs.push({id: inputIdCount, name: '', location: '', day: '', startPeriod: '', endPeriod: ''});
 		};
 
 		$scope.removeActivityInput = function(id) {
@@ -37,7 +37,7 @@ angular.module('timetableCsv')
 			};
 
 			scheduleFormFactory.post(body, function(data) {
-				console.log(data);
+				console.log(data.data);
 			});
 		};
 
@@ -45,8 +45,8 @@ angular.module('timetableCsv')
 			for (var i = 0; i < $scope.activityInputs.length; i++) {
 				var input = $scope.activityInputs[i];
 
-				if (input.day == '' || input.startPeriod == '' || input.endPeriod == '') {
-					return 'Please fill in all the fields for each of your activities.';
+				if (input.name == '' || input.day == '' || input.startPeriod == '' || input.endPeriod == '') {
+					return 'Please fill in all the fields (except location, which is optional) for each of your activities.';
 				} else if (parseInt(input.startPeriod) > parseInt(input.endPeriod)) {
 					return 'Please make sure that all your activies end after they start.';
 				}
