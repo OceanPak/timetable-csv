@@ -9,80 +9,82 @@ module.exports = function(timetable, cdates, activities) {
     ['13:45:00', '15:00:00']
   ];
 
-  var raw = timetable.split('\n');
-
-  var splitday = [];
-
-  var c = 0;
-  for (var i = 1; i < raw.length; i++) {
-    if (raw[i].indexOf('\t') > -1) {
-      splitday.push(raw.slice(c, i));
-      c = i;
-    }
-  }
-  splitday.push(raw.slice(c, raw.length));
-
   var masterstr = '';
   masterstr += 'Subject,Start Date,Start Time,End Date,End Time,Location,Description,All Day Event\n';
 
-  for (i = 0; i < splitday.length; i++) {
-    var day = splitday[i];
+	if (timetable != '') {
+		var raw = timetable.split('\n');
 
-		var sday = day[0].split(' ')[1].slice(0, 2);
+	  var splitday = [];
 
-    var dates = cdates[sday];
+	  var c = 0;
+	  for (var i = 1; i < raw.length; i++) {
+	    if (raw[i].indexOf('\t') > -1) {
+	      splitday.push(raw.slice(c, i));
+	      c = i;
+	    }
+	  }
+	  splitday.push(raw.slice(c, raw.length));
 
-		for (var j = 0; j < dates.length; j++) {
-			var d = dates[j];
+	  for (i = 0; i < splitday.length; i++) {
+	    var day = splitday[i];
 
-			var subject = 'Day ' + sday;
-			var startDate = '' + (d.getMonth() + 1) + '/' + d.getDate() + '/' + d.getFullYear();
-			var startTime = '';
-			var endDate = startDate;
-			var endTime = '';
-			var location = '';
-			var description = '';
-			var allDayEvent = 'True';
+			var sday = day[0].split(' ')[1].slice(0, 2);
 
-			var s = subject + ',' + startDate + ',' + startTime + ',' + endDate + ',' + endTime + ',' + location + ',' + description + ',' + allDayEvent + '\n';
-			masterstr += s;
-		}
+	    var dates = cdates[sday];
 
-    day.splice(0, 1);
+			for (var j = 0; j < dates.length; j++) {
+				var d = dates[j];
 
-    var classes = [];
+				var subject = 'Day ' + sday;
+				var startDate = '' + (d.getMonth() + 1) + '/' + d.getDate() + '/' + d.getFullYear();
+				var startTime = '';
+				var endDate = startDate;
+				var endTime = '';
+				var location = '';
+				var description = '';
+				var allDayEvent = 'True';
 
-    var k = 0;
-    for (j = 0; j < 6; j++) {
-      if (day[k] != '') {
-        classes[j] = day.slice(k, k + 3);
-        k += 3;
-      } else {
-        k += 2;
-      }
-    }
+				var s = subject + ',' + startDate + ',' + startTime + ',' + endDate + ',' + endTime + ',' + location + ',' + description + ',' + allDayEvent + '\n';
+				masterstr += s;
+			}
 
-    for (j = 0; j < dates.length; j++) {
-      for (k = 0; k < classes.length; k++) {
-        var d = dates[j];
-        var c = classes[k];
+	    day.splice(0, 1);
 
-        if (c != undefined) {
-          var subject = c[0];
-          var startDate = '' + (d.getMonth() + 1) + '/' + d.getDate() + '/' + d.getFullYear();
-          var startTime = periodtimes[k][0];
-          var endDate = startDate;
-          var endTime = periodtimes[k][1];
-          var location = c[2];
-          var description = c[1];
-					var allDayEvent = 'False';
+	    var classes = [];
 
-          var s = subject + ',' + startDate + ',' + startTime + ',' + endDate + ',' + endTime + ',' + location + ',' + description + ',' + allDayEvent + '\n';
-          masterstr += s;
-        }
-      }
-    }
-  }
+	    var k = 0;
+	    for (j = 0; j < 6; j++) {
+	      if (day[k] != '') {
+	        classes[j] = day.slice(k, k + 3);
+	        k += 3;
+	      } else {
+	        k += 2;
+	      }
+	    }
+
+	    for (j = 0; j < dates.length; j++) {
+	      for (k = 0; k < classes.length; k++) {
+	        var d = dates[j];
+	        var c = classes[k];
+
+	        if (c != undefined) {
+	          var subject = c[0];
+	          var startDate = '' + (d.getMonth() + 1) + '/' + d.getDate() + '/' + d.getFullYear();
+	          var startTime = periodtimes[k][0];
+	          var endDate = startDate;
+	          var endTime = periodtimes[k][1];
+	          var location = c[2];
+	          var description = c[1];
+						var allDayEvent = 'False';
+
+	          var s = subject + ',' + startDate + ',' + startTime + ',' + endDate + ',' + endTime + ',' + location + ',' + description + ',' + allDayEvent + '\n';
+	          masterstr += s;
+	        }
+	      }
+	    }
+	  }
+	}
 
 	var activitiesPeriodTimes = [
 		['07:55:00', '09:15:00'],
