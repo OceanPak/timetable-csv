@@ -1,11 +1,12 @@
 var express = require('express');
 var router = express.Router();
 
-var cycledates = require('../public/javascripts/cycledates.js');
-var convertjson = require('../public/javascripts/convertjson.js');
-var generatecsv = require('../public/javascripts/generatecsv.js');
+var cycledates = require('../controllers/cycledates.js');
+var convertjson = require('../controllers/convertjson.js');
+var generatecsv = require('../controllers/generatecsv.js');
 
-var jdates = require('../public/json/cdates.json');
+var jdates = require('../controllers/cdates.json');
+var fridays = require('../controllers/fridays.json');
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
@@ -16,7 +17,7 @@ router.post('/getcsv', function(req, res, next) {
 	var cdates;
 
 	if (req.body.cycledays != '') {
-		cdates = cycledates(req.body.cycledays);
+		cdates = cycledates(req.body.cycledays, fridays);
 	} else {
 		cdates = convertjson(jdates);
 	}

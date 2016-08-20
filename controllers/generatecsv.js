@@ -10,6 +10,8 @@ module.exports = function(timetable, cdates) {
 
   var raw = timetable.split("\r\n");
 
+	console.log(raw);
+
   var splitday = [];
 
   var c = 0;
@@ -33,7 +35,7 @@ module.exports = function(timetable, cdates) {
 
 		for (var j = 0; j < dates.length; j++) {
 			var d = dates[j];
-			
+
 			var subject = 'Day ' + sday;
 			var startDate = '' + (d.getMonth() + 1) + '/' + d.getDate() + '/' + d.getFullYear();
 			var startTime = '';

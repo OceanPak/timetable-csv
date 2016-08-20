@@ -1,8 +1,6 @@
 // Convert cycle dates to dictionary
 
-var fridays = require('../json/fridays.json');
-
-module.exports = function(cycledays) {
+module.exports = function(cycledays, fridays) {
   var stod = {
     Jan: [0, 2017],
     Feb: [1, 2017],

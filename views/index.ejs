@@ -3,9 +3,14 @@
   <head>
     <title><%= title %></title>
     <link rel='stylesheet' href='/stylesheets/style.css' />
+
+		<script src='https://ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular.js'></script>
+		<script src='javascripts/app.js'></script>
+		<script src='javascripts/controllers.js'></script>
+		<script src='javascripts/services.js'></script>
   </head>
 
-  <body>
+  <body ng-app='timetableCsv'>
     <h1><%= title %></h1>
 
 		<p>
@@ -18,10 +23,68 @@
 			</ol>
 		</p>
 
-    <form id="textform" method="POST" action="/getcsv">
-      <textarea placeholder="Copy/paste your timetable here" cols="80" rows="20" name="timetable" form="textform"></textarea>
-      <textarea placeholder="Copy/paste cycle days here" cols="80" rows="20" name="cycledays" form="textform" hidden></textarea><br>
-      <input type="submit" value="Submit">
+		<form ng-controller='ScheduleFormCtrl' ng-submit='submit()'>
+      <textarea placeholder='Copy/paste timetable here' cols='80' rows='20' ng-model='timetable'></textarea>
+      <textarea placeholder='Copy/paste cycle days here' cols='80' rows='20' ng-model='cycledays' hidden></textarea><br><br>
+
+			<div ng-repeat='activityInput in activityInputs'>
+				<input type='text' ng-model='activityInput.name' placeholder='Activity/meeting name'>
+
+				<select ng-model='activityInput.day'>
+					<option value='' disabled selected>Activity/meeting day</option>
+					<option value='0'>Monday</option>
+					<option value='1'>Tuesday</option>
+					<option value='2'>Wednesday</option>
+					<option value='3'>Thursday</option>
+					<option value='4'>Friday</option>
+					<option value='a1'>Day A1</option>
+					<option value='b1'>Day B1</option>
+					<option value='a2'>Day A2</option>
+					<option value='b2'>Day B2</option>
+					<option value='a3'>Day A3</option>
+					<option value='b3'>Day B3</option>
+					<option value='a4'>Day A4</option>
+					<option value='b4'>Day B4</option>
+					<option value='a5'>Day A5</option>
+					<option value='b5'>Day B5</option>
+					<option value='a6'>Day A6</option>
+					<option value='b6'>Day B6</option>
+				</select>
+
+				<select ng-model='activityInput.startPeriod'>
+					<option value='' disabled selected>Starting period</option>
+					<option value='0'>Period 1</option>
+					<option value='1'>Period 2</option>
+					<option value='2'>Period 3</option>
+					<option value='3'>Period 4</option>
+					<option value='4'>Period 5</option>
+					<option value='5'>Lunch</option>
+					<option value='6'>Period 6</option>
+					<option value='7'>3:15 to 4:15</option>
+					<option value='8'>4:15 to 5:00</option>
+				</select>
+
+				<select ng-model='activityInput.endPeriod'>
+					<option value='' disabled selected>Ending period</option>
+					<option value='0'>Period 1</option>
+					<option value='1'>Period 2</option>
+					<option value='2'>Period 3</option>
+					<option value='3'>Period 4</option>
+					<option value='4'>Period 5</option>
+					<option value='5'>Lunch</option>
+					<option value='6'>Period 6</option>
+					<option value='7'>3:15 to 4:15</option>
+					<option value='8'>4:15 to 5:00</option>
+				</select>
+
+				<button type='button' ng-click='removeActivityInput(activityInput.id)'>-</button>
+			</div><br>
+
+			<button type='button' ng-click='addActivityInput()'>Add activity/meeting</button><br><br>
+
+      <input type='submit' value='Submit'>
+
+			<p>{{message}}</p>
     </form>
   </body>
 </html>
