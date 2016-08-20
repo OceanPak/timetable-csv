@@ -8,9 +8,7 @@ module.exports = function(timetable, cdates) {
     ['13:45:00', '15:00:00']
   ];
 
-  var raw = timetable.split("\r\n");
-
-	console.log(raw);
+  var raw = timetable.split('\n');
 
   var splitday = [];
 
