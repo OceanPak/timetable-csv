@@ -5,9 +5,9 @@ angular.module('timetableCsv')
 
 		o.post = function(body, callback) {
 			$http.post('/getcsv', body).then(function(res) {
-				callback(res);
+				callback(res, null);
 			}, function(err) {
-				callback(err);
+				callback(null, err);
 			});
 		};
 

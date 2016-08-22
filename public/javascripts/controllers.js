@@ -5,7 +5,7 @@ angular.module('timetableCsv')
 
 		$scope.cycledays = '';
 		$scope.timetable = '';
-		$scope.activityInputs = [{id: inputIdCount, name: '', location: '', day: '', startPeriod: '', endPeriod: ''}];
+		$scope.activityInputs = [];
 
 		$scope.addActivityInput = function() {
 			inputIdCount++;
@@ -36,8 +36,10 @@ angular.module('timetableCsv')
 				activities: $scope.activityInputs
 			};
 
-			scheduleFormFactory.post(body, function(data) {
-				console.log(data.data);
+			scheduleFormFactory.post(body, function(data, err) {
+				var blob = new Blob([data.data], {type: 'text/csv'});
+				var objectUrl = URL.createObjectURL(blob);
+				window.open(objectUrl);
 			});
 		};
 

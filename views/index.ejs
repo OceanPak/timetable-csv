@@ -13,15 +13,21 @@
   <body ng-app='timetableCsv'>
     <h1><%= title %></h1>
 
-		<p>
-			<ol>
-				<li><a href='images/step1.png'>(screenshot)</a> Copy/paste your timetable from Moongate <strong>exactly</strong> as shown, into the textbox. Press submit, and a file will be downloaded.</li>
-				<li><a href='images/step2.png'>(screenshot)</a> In Google Calendar, under My Calendars on the left, create a new calendar to store your timetable events.</li>
-				<li><a href='images/step3.png'>(screenshot)</a> Under Other Calendars, click Import Calendar.</li>
-				<li><a href='images/step4.png'>(screenshot)</a> In the dialog box, click Choose File and select the file you downloaded; click the dropdown and select the calendar you made; click Import to finish the process.</li>
-				<li><a href='images/step5.png'>(screenshot)</a> <i>Optional: To remove the events, click the dropdown menu next to your newly created calendar on the left, and select Calendar Settings. Click Permanently Delete This Calendar at the bottom.</i></li>
-			</ol>
-		</p>
+		<h3>Creating calendar (CSV) file</h3>
+
+		<ol>
+			<li><a href='images/step1.png'>(screenshot)</a> Copy/paste timetable from Moongate <strong>exactly</strong> as shown, into textbox.</li>
+			<li><a href='images/step2.png'>(screenshot)</a> Click Add Activity/Meeting, fill in details.</li>
+			<li>Click submit, a file (with a strange name) will be downloaded.</li>
+		</ol>
+
+		<h3>Importing CSV file into Google Calendar</h3>
+
+		<ol>
+			<li><a href='images/step3.png'>(screenshot)</a> In Google Calendar, create new calendar to store timetable events.</li>
+			<li><a href='images/step4.png'>(screenshot)</a> Go to Other Calendars > Import Calendar.</li>
+			<li><a href='images/step5.png'>(screenshot)</a> Choose your downloaded file, and the calendar you just made. Click Import.</li>
+		</ol>
 
 		<form ng-controller='ScheduleFormCtrl' ng-submit='submit()'>
       <textarea placeholder='Copy/paste timetable here' cols='80' rows='20' ng-model='timetable'></textarea>
@@ -34,11 +40,11 @@
 
 				<select ng-model='activityInput.day'>
 					<option value='' disabled selected>Activity/meeting day</option>
-					<option value='0'>Monday</option>
-					<option value='1'>Tuesday</option>
-					<option value='2'>Wednesday</option>
-					<option value='3'>Thursday</option>
-					<option value='4'>Friday</option>
+					<option value='1'>Monday</option>
+					<option value='2'>Tuesday</option>
+					<option value='3'>Wednesday</option>
+					<option value='4'>Thursday</option>
+					<option value='5'>Friday</option>
 					<option value='a1'>Day A1</option>
 					<option value='b1'>Day B1</option>
 					<option value='a2'>Day A2</option>

@@ -119,6 +119,30 @@ module.exports = function(timetable, cdates, activities) {
 				var s = subject + ',' + startDate + ',' + startTime + ',' + endDate + ',' + endTime + ',' + location + ',' + description + ',' + allDayEvent + '\n';
 				masterstr += s;
 			}
+		} else {
+			var keys = Object.keys(cdates);
+
+			for (var j = 0; j < keys.length; j++) {
+				var dates = cdates[keys[j]];
+
+				for (var k = 0; k < dates.length; k++) {
+					d = dates[k];
+
+					if (d.getDay() == activity.day) {
+						var subject = activity.name;
+						var startDate = '' + (d.getMonth() + 1) + '/' + d.getDate() + '/' + d.getFullYear();
+						var startTime = activitiesPeriodTimes[activity.startPeriod][0];
+						var endDate = startDate;
+						var endTime = activitiesPeriodTimes[activity.endPeriod][1];
+						var location = activity.location;
+						var description = '';
+						var allDayEvent = 'False';
+
+						var s = subject + ',' + startDate + ',' + startTime + ',' + endDate + ',' + endTime + ',' + location + ',' + description + ',' + allDayEvent + '\n';
+						masterstr += s;
+					}
+				}
+			}
 		}
 	}
 
