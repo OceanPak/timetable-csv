@@ -52,7 +52,7 @@ var genClassesOfDayTeacher = function(day) {
 	return classes;
 }
 
-var genClassEventsStudent = function(dates, classes, periodtimes) {
+var genClassEvents = function(dates, classes, periodtimes) {
 	masterstr = '';
 
 	for (var j = 0; j < dates.length; j++) {
@@ -116,39 +116,23 @@ module.exports = function(timetable, cdates, activities, isTeacher) {
   masterstr += 'Subject,Start Date,Start Time,End Date,End Time,Location,Description,All Day Event\n';
 
 	if (timetable != '') {
-		if (!isTeacher) {
-			var splitday = genSplitDay(timetable);
+		var splitday = genSplitDay(timetable);
 
-		  for (i = 0; i < splitday.length; i++) {
-		    var day = splitday[i];
-				var sday = day[0].split(' ')[1].slice(0, 2);
-				var dates = cdates[sday];
+		for (i = 0; i < splitday.length; i++) {
+			var day = splitday[i];
+			var sday = day[0].split(' ')[1].slice(0, 2);
+			var dates = cdates[sday];
 
-				masterstr += genFullDayEvents(dates, sday);
-				day.splice(0, 1);
+			day.splice(0, 1);
 
-		    var classes = genClassesOfDayStudent(day);
-				console.log(classes);
-
-				masterstr += genClassEventsStudent(dates, classes, periodtimes);
-		  }
-		} else {
-			var splitday = genSplitDay(timetable);
-
-			for (i = 0; i < splitday.length; i++) {
-				var day = splitday[i];
-				var sday = day[0].split(' ')[1].slice(0, 2);
-				var dates = cdates[sday];
-
-				masterstr += genFullDayEvents(dates, sday);
-				day.splice(0, 1);
-
+			if (isTeacher) {
 				var classes = genClassesOfDayTeacher(day);
-
-				console.log(classes);
-
-				masterstr += genClassEventsStudent(dates, classes, periodtimes);
+			} else {
+				masterstr += genFullDayEvents(dates, sday);
+				var classes = genClassesOfDayStudent(day);
 			}
+
+			masterstr += genClassEvents(dates, classes, periodtimes);
 		}
 	}
 
