@@ -22,7 +22,7 @@ router.post('/getcsv', function(req, res, next) {
 		cdates = convertjson(jdates);
 	}
 
-  var masterstr = generatecsv(req.body.timetable, cdates, req.body.activities);
+  var masterstr = generatecsv(req.body.timetable, cdates, req.body.activities, req.body.isTeacher);
 
   res.set({'Content-Disposition': 'attachment; filename=\'timetable.csv\''});
   res.send(masterstr);

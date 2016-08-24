@@ -33,7 +33,8 @@ angular.module('timetableCsv')
 			var body = {
 				cycledays: $scope.cycledays,
 				timetable: $scope.timetable,
-				activities: $scope.activityInputs
+				activities: $scope.activityInputs,
+				isTeacher: $scope.isTeacher
 			};
 
 			scheduleFormFactory.post(body, function(data, err) {
