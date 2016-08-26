@@ -1,4 +1,6 @@
-module.exports = function(jdates) {
+var jdates = require('./cdates.json');
+
+module.exports = function() {
 	var cdates = {};
 
 	// stop-midterm

@@ -5,6 +5,7 @@ angular.module('timetableCsv')
 
 		$scope.cycledays = '';
 		$scope.timetable = '';
+		$scope.role = '';
 		$scope.activityInputs = [];
 
 		$scope.addActivityInput = function() {
@@ -34,7 +35,7 @@ angular.module('timetableCsv')
 				cycledays: $scope.cycledays,
 				timetable: $scope.timetable,
 				activities: $scope.activityInputs,
-				isTeacher: $scope.isTeacher
+				role: $scope.role
 			};
 
 			scheduleFormFactory.post(body, function(data, err) {
@@ -45,6 +46,10 @@ angular.module('timetableCsv')
 		};
 
 		var validate = function() {
+			if ($scope.role == '') {
+				return 'Please identify your role.';
+			}
+
 			for (var i = 0; i < $scope.activityInputs.length; i++) {
 				var input = $scope.activityInputs[i];
 

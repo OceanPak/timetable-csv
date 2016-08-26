@@ -32,7 +32,10 @@
 		<form ng-controller='ScheduleFormCtrl' ng-submit='submit()'>
       <textarea placeholder='Copy/paste timetable here' cols='80' rows='20' ng-model='timetable'></textarea>
       <textarea placeholder='Copy/paste cycle days here' cols='80' rows='20' ng-model='cycledays' hidden></textarea><br>
-			<input type='checkbox' ng-model='isTeacher'><label>I am a teacher</label><br><br>
+
+			<label><input type='radio' ng-model='role' value='myp'> I am an MYP student</label><br>
+			<label><input type='radio' ng-model='role' value='dp'> I am a DP student</label><br>
+			<label><input type='radio' ng-model='role' value='teacher'> I am a teacher</label><br><br>
 
 			<div ng-repeat='activityInput in activityInputs'>
 				<input type='text' ng-model='activityInput.name' placeholder='Activity/meeting name'>
@@ -67,8 +70,8 @@
 					<option value='2'>Period 3</option>
 					<option value='3'>Period 4</option>
 					<option value='4'>Period 5</option>
-					<option value='5'>Lunch</option>
-					<option value='6'>Period 6</option>
+					<option value='6'>Lunch</option>
+					<option value='5'>Period 6</option>
 					<option value='7'>3:15 to 4:15</option>
 					<option value='8'>4:15 to 5:00</option>
 				</select>
@@ -80,8 +83,8 @@
 					<option value='2'>Period 3</option>
 					<option value='3'>Period 4</option>
 					<option value='4'>Period 5</option>
-					<option value='5'>Lunch</option>
-					<option value='6'>Period 6</option>
+					<option value='6'>Lunch</option>
+					<option value='5'>Period 6</option>
 					<option value='7'>3:15 to 4:15</option>
 					<option value='8'>4:15 to 5:00</option>
 				</select>
