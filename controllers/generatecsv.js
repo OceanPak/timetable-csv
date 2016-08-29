@@ -100,11 +100,14 @@ var genClassEvents = function(dates, classes, role) {
 
 	for (var j = 0; j < dates.length; j++) {
 		var times;
+		var advTimes;
 
 		if (!isChoices(dates[j])) {
 			times = periodtimes['normal'][role];
+			advTimes = periodtimes['normal']['myp'];
 		} else {
 			times = periodtimes['choices'][role];
+			advTimes = periodtimes['choices']['myp'];
 			var d = dates[j];
 
 			var subject = 'CHOICES';
@@ -127,7 +130,11 @@ var genClassEvents = function(dates, classes, role) {
 			if (c != undefined && c[0] != '') {
 				var subject = c[0];
 				var startDate = '' + (d.getMonth() + 1) + '/' + d.getDate() + '/' + d.getFullYear();
+				// Check for special case: teacher advisory or HL period
 				var startTime = times[k][0];
+				if (role == 'teacher' && isAdvisory(c[0])) {
+					startTime = advTimes[k][0];
+				}
 				var endDate = startDate;
 				var endTime = times[k][1];
 				var location = c[2];
@@ -141,6 +148,10 @@ var genClassEvents = function(dates, classes, role) {
 	}
 
 	return masterstr;
+};
+
+var isAdvisory = function(subject) {
+	return (subject.length == 5 && !isNaN(subject.slice(0, 2)) && isNaN(subject.slice(2, 3)));
 };
 
 var genFullDayEvents = function(dates, sday) {
