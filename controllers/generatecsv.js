@@ -43,6 +43,11 @@ module.exports = function(timetable, cdates, activities, role) {
 var genSplitDay = function(timetable) {
 	var raw = timetable.split('\n');
 
+	// Special case, for if Day B6 has all free periods
+	if (raw[raw.length - 1] == 'Day B6') {
+		raw[raw.length - 1] += '\t';
+	}
+
 	var splitday = [];
 
 	var c = 0;
