@@ -39,6 +39,11 @@ angular.module('timetableCsv')
 			};
 
 			scheduleFormFactory.post(body, function(data, err) {
+				if (err) {
+					// $scope.message = 'An error has occurred! Please make sure your copy/pasting matches the screenshot exactly.';
+					$scope.message = err;
+					return;
+				}
 				var blob = new Blob([data.data], {type: 'text/csv'});
 				var objectUrl = URL.createObjectURL(blob);
 				window.open(objectUrl);
