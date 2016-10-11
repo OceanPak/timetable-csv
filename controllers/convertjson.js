@@ -7,10 +7,10 @@ module.exports = function() {
 	var midterm = new Date(2016, 9, 24);
 
 	// start-midterm
-	var startMidterm = new Date(2016, 10, 1);
+	var startMidterm = new Date(2016, 09, 30);
 
 	// end-sem1
-	var endSem1 = new Date(2017, 0, 10);
+	var endSem1 = new Date(2017, 0, 11);
 
 	for (var key in jdates) {
 		var timestamps = jdates[key];
