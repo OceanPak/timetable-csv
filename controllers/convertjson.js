@@ -3,14 +3,15 @@ var jdates = require('./cdates.json');
 module.exports = function() {
 	var cdates = {};
 
-	// stop-midterm
-	var midterm = new Date(2016, 9, 24);
+	var startMidterm = new Date(2016, 9, 24);
 
-	// start-midterm
-	var startMidterm = new Date(2016, 9, 31);
+	var endMidterm = new Date(2016, 9, 31);
 
-	// end-sem1
 	var endSem1 = new Date(2017, 0, 11);
+
+	var startSem2 = new Date(2017, 0, 10);
+
+	var endSem2 = new Date(2017, 5, 17);
 
 	for (var key in jdates) {
 		var timestamps = jdates[key];
@@ -18,8 +19,7 @@ module.exports = function() {
 
 		for (var i = 0; i < timestamps.length; i++) {
 			var d = new Date(timestamps[i]);
-			// start-midterm
-			if (d.valueOf() > startMidterm.valueOf() && d.valueOf() < endSem1.valueOf()) {
+			if (d.valueOf() > startSem2.valueOf() && d.valueOf() < endSem2.valueOf()) {
 				dates.push(d);
 			}
 		}
