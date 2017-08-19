@@ -19,9 +19,7 @@ module.exports = function() {
 
 		for (var i = 0; i < timestamps.length; i++) {
 			var d = new Date(timestamps[i]);
-			if (d.valueOf() > startSem2.valueOf() && d.valueOf() < endSem2.valueOf()) {
-				dates.push(d);
-			}
+			dates.push(d);
 		}
 
 		cdates[key] = dates;
