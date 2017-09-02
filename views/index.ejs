@@ -1,103 +1,103 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <title><%= title %></title>
-    <link rel='stylesheet' href='/stylesheets/style.css' />
+<head>
+	<title><%= title %></title>
+	<link rel='stylesheet' href='/stylesheets/style.css' />
 
-		<script src='https://ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular.js'></script>
-		<script src='javascripts/app.js'></script>
-		<script src='javascripts/controllers.js'></script>
-		<script src='javascripts/services.js'></script>
-  </head>
+	<script src='https://ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular.js'></script>
+	<script src='javascripts/app.js'></script>
+	<script src='javascripts/controllers.js'></script>
+	<script src='javascripts/services.js'></script>
+</head>
 
-  <body ng-app='timetableCsv'>
-    <h1><%= title %></h1>
+<body ng-app='timetableCsv'>
+	<h1><%= title %></h1>
 
-		<p>Aug 23 2017: Updated for 2017-18</p>
+	<p>Aug 23 2017: Updated for 2017-18</p>
 
-		<h3>Creating calendar (CSV) file</h3>
+	<h3>Creating calendar (CSV) file</h3>
 
-		<ol>
-			<li><a href='images/step1.png'>(screenshot)</a> Copy/paste timetable from Moongate <strong>exactly</strong> as shown, into textbox.</li>
-			<li><a href='images/step2.png'>(screenshot)</a> Click Add Activity/Meeting, fill in details.</li>
-			<li>Click submit, a file (with a strange name) will be downloaded.</li>
-		</ol>
+	<ol>
+		<li><a href='images/step1.png'>(screenshot)</a> Copy/paste timetable from Moongate <strong>exactly</strong> as shown, into textbox.</li>
+		<li><a href='images/step2.png'>(screenshot)</a> Click Add Activity/Meeting, fill in details.</li>
+		<li>Click submit, a file (with a strange name) will be downloaded.</li>
+	</ol>
 
-		<h3>Importing CSV file into Google Calendar</h3>
+	<h3>Importing CSV file into Google Calendar</h3>
 
-		<ol>
-			<li><a href='images/step4.png'>(screenshot)</a> Go to Other Calendars > Import Calendar.</li>
-			<li><a href='images/step5.png'>(screenshot)</a> Choose your downloaded file, and your calendar. Click Import.</li>
-		</ol>
+	<ol>
+		<li><a href='images/step4.png'>(screenshot)</a> Go to Other Calendars > Import Calendar.</li>
+		<li><a href='images/step5.png'>(screenshot)</a> Choose your downloaded file, and your calendar. Click Import.</li>
+	</ol>
 
-		<form ng-controller='ScheduleFormCtrl' ng-submit='submit()'>
-      <textarea placeholder='Copy/paste timetable here' cols='80' rows='20' ng-model='timetable'></textarea>
-      <textarea placeholder='Copy/paste cycle days here' cols='80' rows='20' ng-model='cycledays' hidden></textarea><br>
+	<form ng-controller='ScheduleFormCtrl' ng-submit='submit()'>
+		<textarea placeholder='Copy/paste timetable here' cols='80' rows='20' ng-model='timetable'></textarea>
+		<textarea placeholder='Copy/paste cycle days here' cols='80' rows='20' ng-model='cycledays' hidden></textarea><br>
 
-			<label><input type='radio' ng-model='role' value='myp'> I am an MYP student</label><br>
-			<label><input type='radio' ng-model='role' value='dp'> I am a DP student</label><br>
-			<label><input type='radio' ng-model='role' value='teacher'> I am a teacher</label><br><br>
+		<label><input type='radio' ng-model='role' value='myp'> I am an MYP student</label><br>
+		<label><input type='radio' ng-model='role' value='dp'> I am a DP student</label><br>
+		<label><input type='radio' ng-model='role' value='teacher'> I am a teacher</label><br><br>
 
-			<div ng-repeat='activityInput in activityInputs'>
-				<input type='text' ng-model='activityInput.name' placeholder='Activity/meeting name'>
+		<div ng-repeat='activityInput in activityInputs'>
+			<input type='text' ng-model='activityInput.name' placeholder='Activity/meeting name'>
 
-				<input type='text' ng-model='activityInput.location' placeholder='Location (optional)'>
+			<input type='text' ng-model='activityInput.location' placeholder='Location (optional)'>
 
-				<select ng-model='activityInput.day'>
-					<option value='' disabled selected>Activity/meeting day</option>
-					<option value='1'>Monday</option>
-					<option value='2'>Tuesday</option>
-					<option value='3'>Wednesday</option>
-					<option value='4'>Thursday</option>
-					<option value='5'>Friday</option>
-					<option value='a1'>Day A1</option>
-					<option value='b1'>Day B1</option>
-					<option value='a2'>Day A2</option>
-					<option value='b2'>Day B2</option>
-					<option value='a3'>Day A3</option>
-					<option value='b3'>Day B3</option>
-					<option value='a4'>Day A4</option>
-					<option value='b4'>Day B4</option>
-					<option value='a5'>Day A5</option>
-					<option value='b5'>Day B5</option>
-					<option value='a6'>Day A6</option>
-					<option value='b6'>Day B6</option>
-				</select>
+			<select ng-model='activityInput.day'>
+				<option value='' disabled selected>Activity/meeting day</option>
+				<option value='1'>Monday</option>
+				<option value='2'>Tuesday</option>
+				<option value='3'>Wednesday</option>
+				<option value='4'>Thursday</option>
+				<option value='5'>Friday</option>
+				<option value='a1'>Day A1</option>
+				<option value='b1'>Day B1</option>
+				<option value='a2'>Day A2</option>
+				<option value='b2'>Day B2</option>
+				<option value='a3'>Day A3</option>
+				<option value='b3'>Day B3</option>
+				<option value='a4'>Day A4</option>
+				<option value='b4'>Day B4</option>
+				<option value='a5'>Day A5</option>
+				<option value='b5'>Day B5</option>
+				<option value='a6'>Day A6</option>
+				<option value='b6'>Day B6</option>
+			</select>
 
-				<select ng-model='activityInput.startPeriod'>
-					<option value='' disabled selected>Starting period</option>
-					<option value='0'>Period 1</option>
-					<option value='1'>Period 2</option>
-					<option value='2'>Period 3</option>
-					<option value='3'>Period 4</option>
-					<option value='4'>Period 5</option>
-					<option value='6'>Lunch</option>
-					<option value='5'>Period 6</option>
-					<option value='7'>3:15 to 4:15</option>
-					<option value='8'>4:15 to 5:00</option>
-				</select>
+			<select ng-model='activityInput.startPeriod'>
+				<option value='' disabled selected>Starting period</option>
+				<option value='0'>Period 1</option>
+				<option value='1'>Period 2</option>
+				<option value='2'>Period 3</option>
+				<option value='3'>Period 4</option>
+				<option value='4'>Period 5</option>
+				<option value='6'>Lunch</option>
+				<option value='5'>Period 6</option>
+				<option value='7'>3:15 to 4:15</option>
+				<option value='8'>4:15 to 5:00</option>
+			</select>
 
-				<select ng-model='activityInput.endPeriod'>
-					<option value='' disabled selected>Ending period</option>
-					<option value='0'>Period 1</option>
-					<option value='1'>Period 2</option>
-					<option value='2'>Period 3</option>
-					<option value='3'>Period 4</option>
-					<option value='4'>Period 5</option>
-					<option value='6'>Lunch</option>
-					<option value='5'>Period 6</option>
-					<option value='7'>3:15 to 4:15</option>
-					<option value='8'>4:15 to 5:00</option>
-				</select>
+			<select ng-model='activityInput.endPeriod'>
+				<option value='' disabled selected>Ending period</option>
+				<option value='0'>Period 1</option>
+				<option value='1'>Period 2</option>
+				<option value='2'>Period 3</option>
+				<option value='3'>Period 4</option>
+				<option value='4'>Period 5</option>
+				<option value='6'>Lunch</option>
+				<option value='5'>Period 6</option>
+				<option value='7'>3:15 to 4:15</option>
+				<option value='8'>4:15 to 5:00</option>
+			</select>
 
-				<button type='button' ng-click='removeActivityInput(activityInput.id)'>-</button>
-			</div><br>
+			<button type='button' ng-click='removeActivityInput(activityInput.id)'>-</button>
+		</div><br>
 
-			<button type='button' ng-click='addActivityInput()'>Add activity/meeting</button><br><br>
+		<button type='button' ng-click='addActivityInput()'>Add activity/meeting</button><br><br>
 
-      <input type='submit' value='Submit'>
+		<input type='submit' value='Submit'>
 
-			<p>{{message}}</p>
-    </form>
-  </body>
+		<p>{{message}}</p>
+	</form>
+</body>
 </html>
