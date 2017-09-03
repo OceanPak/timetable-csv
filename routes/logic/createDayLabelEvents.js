@@ -1,4 +1,4 @@
-module.exports = function(timetableObj, periodTimes, dates, cycleDayLabels) {
+module.exports = function(timetableObj, dates, cycleDayLabels, dateRange) {
 	// array to store all events
 	// outer layer: array of events
 	// middle layer: array of event properties (in order: subject, startDate,
@@ -10,33 +10,20 @@ module.exports = function(timetableObj, periodTimes, dates, cycleDayLabels) {
 	// its corresponding events
 	dates.forEach(function(cycleDayOfDates, cycleDayIndex) {
 		cycleDayOfDates.forEach(function(jsonDay) {
-			// create all-day day label event
-			// uses arbitrary start and end times
-			allEvents.push([cycleDayLabels[cycleDayIndex],
-				formatJSONToDate(jsonDay),
-				'00:00 AM',
-				formatJSONToDate(jsonDay),
-				'01:00 AM',
-				'True',
-				'',
-				''
-			]);
-
-			timetableObj[cycleDayIndex].forEach(function(period, periodIndex) {
-				// check if period is free
-				if (period[0] !== '' && period[1] !== '') {
-					// get corresponding periodTime using periodIndex
-					allEvents.push([period[0],
-						formatJSONToDate(jsonDay),
-						formatJSONToTime(periodTimes[periodIndex][0]),
-						formatJSONToDate(jsonDay),
-						formatJSONToTime(periodTimes[periodIndex][1]),
-						'False',
-						period[2] == undefined ? '' : period[2],
-						period[1]
-					]);
-				}
-			});
+			// check if jsonDay falls within dateRange
+			if (jsonDay >= dateRange[0] && jsonDay <= dateRange[1]) {
+				// create all-day day label event
+				// uses arbitrary start and end times
+				allEvents.push([cycleDayLabels[cycleDayIndex],
+					formatJSONToDate(jsonDay),
+					'00:00 AM',
+					formatJSONToDate(jsonDay),
+					'01:00 AM',
+					'True',
+					'',
+					''
+				]);
+			}
 		});
 	});
 

@@ -5,15 +5,24 @@ var cycledates = require('../controllers/cycledates.js');
 var convertjson = require('../controllers/convertjson.js');
 var generatecsv = require('../controllers/generatecsv.js');
 
-var parseTeacherTimetable = require('./logic/parseTeacherTimetable.js');
-var createDays = require('./logic/createDays.js');
-var createChoices = require('./logic/createChoices.js')
 var convertToCSV = require('./logic/convertToCSV.js');
-var teacherTimes = require('./resources/teacherTimes.json');
-var teacherChoicesTimes = require('./resources/teacherChoicesTimes.json');
-var dates = require('./resources/dates.json');
+var createDayLabelEvents = require('./logic/createDayLabelEvents.js');
+var createPeriodEvents = require('./logic/createPeriodEvents.js');
+var parseStudentTimetable = require('./logic/parseStudentTimetable.js');
+var parseTeacherTimetable = require('./logic/parseTeacherTimetable.js');
+
 var choicesDates = require('./resources/choicesDates.json');
+var choicesTime = require('./resources/choicesTime.json');
+var choicesTimetable = require('./resources/choicesTimetable.json');
 var cycleDayLabels = require('./resources/cycleDayLabels.json');
+var dateRange = require('./resources/dateRange.json');
+var dates = require('./resources/dates.json');
+var dpChoicesTimes = require('./resources/dpChoicesTimes.json');
+var dpTimes = require('./resources/dpTimes.json');
+var mypChoicesTimes = require('./resources/mypChoicesTimes.json');
+var mypTimes = require('./resources/mypTimes.json');
+var teacherChoicesTimes = require('./resources/teacherChoicesTimes.json');
+var teacherTimes = require('./resources/teacherTimes.json');
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
@@ -21,24 +30,72 @@ router.get('/', function(req, res, next) {
 });
 
 router.post('/getcsv', function(req, res, next) {
+
 	if (req.body.role === 'teacher') {
+
 		var timetableObj = parseTeacherTimetable(req.body.timetable);
-		var eventsNormal = createDays(timetableObj, teacherTimes, dates, cycleDayLabels);
-		var eventsChoicesDays = createDays(timetableObj, teacherChoicesTimes, choicesDates, cycleDayLabels);
-		var eventsChoices = createChoices(teacherChoicesTimes, choicesDates);
+
+		var allEvents = [
+			createDayLabelEvents(timetableObj, dates, cycleDayLabels, dateRange),
+			createDayLabelEvents(timetableObj, choicesDates, cycleDayLabels, dateRange),
+			createPeriodEvents(timetableObj, teacherTimes, dates, dateRange),
+			createPeriodEvents(timetableObj, teacherChoicesTimes, choicesDates, dateRange),
+			createPeriodEvents(choicesTimetable, choicesTime, choicesDates, dateRange)
+		];
+
 		var masterstr = 'Subject,Start Date,Start Time,End Date,End Time,All Day Event,Description,Location\n';
-		masterstr += convertToCSV(eventsNormal) + '\n' + convertToCSV(eventsChoices) + '\n' + convertToCSV(eventsChoicesDays);
-		console.log(masterstr);
-	} else {
-		var cdates;
 
-		if (req.body.cycledays != '') {
-			cdates = cycledates(req.body.cycledays);
-		} else {
-			cdates = convertjson();
-		}
+		allEvents.forEach(function(i) {
+			masterstr += convertToCSV(i) + '\n';
+		});
 
-		var masterstr = generatecsv(req.body.timetable, cdates, req.body.activities, req.body.role);
+	} else if (req.body.role === 'dp') {
+
+		var timetableObj = parseStudentTimetable(req.body.timetable);
+
+		var allEvents = [
+			createDayLabelEvents(timetableObj, dates, cycleDayLabels, dateRange),
+			createDayLabelEvents(timetableObj, choicesDates, cycleDayLabels, dateRange),
+			createPeriodEvents(timetableObj, dpTimes, dates, dateRange),
+			createPeriodEvents(timetableObj, dpChoicesTimes, choicesDates, dateRange),
+			createPeriodEvents(choicesTimetable, choicesTime, choicesDates, dateRange)
+		];
+
+		var masterstr = 'Subject,Start Date,Start Time,End Date,End Time,All Day Event,Description,Location\n';
+
+		allEvents.forEach(function(i) {
+			masterstr += convertToCSV(i) + '\n';
+		});
+
+		// var cdates;
+
+		// if (req.body.cycledays != '') {
+		// 	cdates = cycledates(req.body.cycledays);
+		// } else {
+		// 	cdates = convertjson();
+		// }
+
+		// var masterstr = generatecsv(req.body.timetable, cdates, req.body.activities, req.body.role);
+
+	} else if (req.body.role === 'myp') {
+
+		var timetableObj = parseStudentTimetable(req.body.timetable);
+		console.log(timetableObj);
+
+		var allEvents = [
+			createDayLabelEvents(timetableObj, dates, cycleDayLabels, dateRange),
+			createDayLabelEvents(timetableObj, choicesDates, cycleDayLabels, dateRange),
+			createPeriodEvents(timetableObj, mypTimes, dates, dateRange),
+			createPeriodEvents(timetableObj, mypChoicesTimes, choicesDates, dateRange),
+			createPeriodEvents(choicesTimetable, choicesTime, choicesDates, dateRange)
+		];
+
+		var masterstr = 'Subject,Start Date,Start Time,End Date,End Time,All Day Event,Description,Location\n';
+
+		allEvents.forEach(function(i) {
+			masterstr += convertToCSV(i) + '\n';
+		});
+		
 	}
 
 

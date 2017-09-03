@@ -1,4 +1,4 @@
-module.exports = function(periodTimes, dates) {
+module.exports = function(timetableObj, periodTimes, dates, dateRange) {
 	// array to store all events
 	// outer layer: array of events
 	// middle layer: array of event properties (in order: subject, startDate,
@@ -8,18 +8,26 @@ module.exports = function(periodTimes, dates) {
 	// iterate through each JSON value in dates.json, checking which cycle day
 	// it is by matching the corresponding index in timetableObj, and creating
 	// its corresponding events
-
 	dates.forEach(function(cycleDayOfDates, cycleDayIndex) {
 		cycleDayOfDates.forEach(function(jsonDay) {
-			allEvents.push(['CHOICES',
-				formatJSONToDate(jsonDay),
-				formatJSONToTime(periodTimes[8][0]),
-				formatJSONToDate(jsonDay),
-				formatJSONToTime(periodTimes[8][1]),
-				'False',
-				'',
-				''
-			]);
+			// check if jsonDay falls within dateRange
+			if (jsonDay >= dateRange[0] && jsonDay <= dateRange[1]) {
+				timetableObj[cycleDayIndex].forEach(function(period, periodIndex) {
+					// check if period is free
+					if (period[0] !== '') {
+						// get corresponding periodTime using periodIndex
+						allEvents.push([period[0],
+							formatJSONToDate(jsonDay),
+							formatJSONToTime(periodTimes[periodIndex][0]),
+							formatJSONToDate(jsonDay),
+							formatJSONToTime(periodTimes[periodIndex][1]),
+							'False',
+							period[2] == undefined ? '' : period[1],
+							period[2] == undefined ? period[1] : period[2]
+						]);
+					}
+				});
+			}
 		});
 	});
 
