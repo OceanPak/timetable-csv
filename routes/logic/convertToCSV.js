@@ -4,9 +4,9 @@ module.exports = function(events) {
 	events.forEach(function(event) {
 		var eventStr = '';
 		event.forEach(function(property) {
-			eventStr += property + ','
+			eventStr += property + ',';
 		});
-		eventStr = event.slice(0, -1);
+		eventStr = eventStr.slice(0, -1);
 		masterstr += eventStr + '\n';
 	});
 

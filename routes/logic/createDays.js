@@ -32,7 +32,7 @@ module.exports = function(timetableObj, periodTimes, dates, cycleDayLabels) {
 						formatJSONToDate(jsonDay),
 						formatJSONToTime(periodTimes[periodIndex][1]),
 						'False',
-						period[2],
+						period[2] == undefined ? '' : period[2],
 						period[1]
 					]);
 				}

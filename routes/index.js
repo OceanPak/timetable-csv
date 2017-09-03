@@ -28,6 +28,7 @@ router.post('/getcsv', function(req, res, next) {
 		var eventsChoices = createChoices(teacherChoicesTimes, choicesDates);
 		var masterstr = 'Subject,Start Date,Start Time,End Date,End Time,All Day Event,Description,Location\n';
 		masterstr += convertToCSV(eventsNormal) + '\n' + convertToCSV(eventsChoices) + '\n' + convertToCSV(eventsChoicesDays);
+		console.log(masterstr);
 	} else {
 		var cdates;
 
