@@ -27,7 +27,6 @@ module.exports = function(input) {
 	var isInsideField = false;
 
 	input.split('\n').forEach(function(field) {
-		// console.log(dayIndex + ' ' + fieldIndex + ' ' + field);
 		// if end of a row is reached, then skip following day label and do nothing,
 		// and increment dayIndex
 		if (fieldIndex >= 8) {

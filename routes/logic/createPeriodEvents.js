@@ -16,9 +16,12 @@ module.exports = function(timetableObj, periodTimes, dates, dateRange) {
 					// check if period is free
 					if (period[0] !== '') {
 						// get corresponding periodTime using periodIndex
+						// special case: if period is a teacher advisory, set startTime to 15 mins
+						// before what is written in periodTimes, to compensate for different
+						// advisory times
 						allEvents.push([period[0],
 							formatJSONToDate(jsonDay),
-							formatJSONToTime(periodTimes[periodIndex][0]),
+							checkIfIsTeacherAdvisory(period, periodTimes[periodIndex][0]),
 							formatJSONToDate(jsonDay),
 							formatJSONToTime(periodTimes[periodIndex][1]),
 							'False',
@@ -33,6 +36,23 @@ module.exports = function(timetableObj, periodTimes, dates, dateRange) {
 
 	return allEvents;
 };
+
+function checkIfIsTeacherAdvisory(period, startTime) {
+	// teacher periods have 2 fields; students have 3
+	// regex match to see if period name matches an advisory name (e.g. 11Y2)
+	// check if startTime is of a P4 or a CHOICES P4
+	// if so, subtract time by 15 minutes
+	if (period.length == 2 && period[0].match('^[0-9]{2}[A-Z][0-9]$') !== null && (startTime[1] == 50 || startTime[1] == 10)) {
+		console.log(period.length + ' ' + period[0].match('^[0-9]{2}[A-Z][0-9]$') + ' ' + period[0]);
+		startTime[1] += 15;
+		if (startTime[1] >= 60) {
+			startTime[0] += 1;
+			startTime[1] -= 60;
+		}
+	}
+
+	return formatJSONToTime(startTime);
+}
 
 function formatJSONToDate(dateJSON) {
 	var dateObj = new Date(dateJSON);

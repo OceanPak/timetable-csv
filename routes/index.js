@@ -80,7 +80,6 @@ router.post('/getcsv', function(req, res, next) {
 	} else if (req.body.role === 'myp') {
 
 		var timetableObj = parseStudentTimetable(req.body.timetable);
-		console.log(timetableObj);
 
 		var allEvents = [
 			createDayLabelEvents(timetableObj, dates, cycleDayLabels, dateRange),

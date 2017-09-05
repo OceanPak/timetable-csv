@@ -28,8 +28,6 @@ module.exports = function(input) {
 	var isInsideFree = false;
 
 	input.split('\n').forEach(function(field) {
-		console.log(dayIndex + ' ' + fieldIndex + ' ' + fieldLineCounter + ' ' + field);
-		// console.log(dayIndex + ' ' + fieldIndex + ' ' + field);
 		// if end of a row is reached, then skip following day label and do nothing,
 		// and increment dayIndex
 		if (fieldIndex >= 6) {
