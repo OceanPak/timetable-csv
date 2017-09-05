@@ -43,7 +43,6 @@ function checkIfIsTeacherAdvisory(period, startTime) {
 	// check if startTime is of a P4 or a CHOICES P4
 	// if so, subtract time by 15 minutes
 	if (period.length == 2 && period[0].match('^[0-9]{2}[A-Z][0-9]$') !== null && (startTime[1] == 50 || startTime[1] == 10)) {
-		console.log(period.length + ' ' + period[0].match('^[0-9]{2}[A-Z][0-9]$') + ' ' + period[0]);
 		startTime[1] += 15;
 		if (startTime[1] >= 60) {
 			startTime[0] += 1;

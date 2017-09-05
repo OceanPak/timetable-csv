@@ -44,11 +44,53 @@ module.exports = function(input) {
 			isInsideField = true;
 		}
 		else if (isInsideField) {
-			timetableObj[dayIndex][fieldIndex][1] = field;
-			isInsideField = false;
-			fieldIndex++;
+			// special case: if period is a combined HL/SL class, three lines are used
+			// check for the special case, do not increment fieldIndex if it is
+			if (isHLSL(timetableObj[dayIndex][fieldIndex][0], field)) {
+				timetableObj[dayIndex][fieldIndex][0] = mergeHLSL(timetableObj[dayIndex][fieldIndex][0], field);
+			} else {
+				timetableObj[dayIndex][fieldIndex][1] = field;
+				isInsideField = false;
+				fieldIndex++;
+			}
 		}
 	});
 
 	return timetableObj;
 };
+
+function isHLSL(previousStr, currentStr) {
+	// automatically false if strings are not equal in length
+	if (previousStr.length != currentStr.length) {
+		return false;
+	}
+
+	var numOfDifferentChars = 0;
+
+	// iterate through each character, counting how many are different
+	for (var i = 0; i < previousStr.length; i++) {
+		if (previousStr[i] !== currentStr[i]) {
+			numOfDifferentChars++;
+		}
+	}
+
+	// needs to be only 1 different character
+	if (numOfDifferentChars == 1) {
+		return true;
+	} else {
+		return false;
+	}
+}
+
+function mergeHLSL(hl, sl) {
+	var indexOfDifference;
+
+	for (var i = 0; i < hl.length; i++) {
+		if (hl[i] !== sl[i]) {
+			indexOfDifference = i;
+			break;
+		}
+	}
+
+	return hl.substring(0, indexOfDifference) + 'HL/SL' + hl.substring(indexOfDifference + 2);
+}
