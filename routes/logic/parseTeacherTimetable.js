@@ -44,10 +44,14 @@ module.exports = function(input) {
 			isInsideField = true;
 		}
 		else if (isInsideField) {
-			// special case: if period is a combined HL/SL class, three lines are used
+			// special case 1: if period is a combined HL/SL class, three lines are used
+			// check for the special case, do not increment fieldIndex if it is
+			// special case 2: if period is a combined French/Spanish class, three lines are used
 			// check for the special case, do not increment fieldIndex if it is
 			if (isHLSL(timetableObj[dayIndex][fieldIndex][0], field)) {
 				timetableObj[dayIndex][fieldIndex][0] = mergeHLSL(timetableObj[dayIndex][fieldIndex][0], field);
+			} else if (isFrSp(timetableObj[dayIndex][fieldIndex][0], field)) {
+				timetableObj[dayIndex][fieldIndex][0] = mergeFrSp(timetableObj[dayIndex][fieldIndex][0], field);
 			} else {
 				timetableObj[dayIndex][fieldIndex][1] = field;
 				isInsideField = false;
@@ -93,4 +97,38 @@ function mergeHLSL(hl, sl) {
 	}
 
 	return hl.substring(0, indexOfDifference) + 'HL/SL' + hl.substring(indexOfDifference + 2);
+}
+
+function isFrSp(previousStr, currentStr) {
+	// automatically false if strings are not equal in length
+	if (previousStr.length != currentStr.length) {
+		return false;
+	}
+
+	pSplit = previousStr.split(' ');
+	cSplit = previousStr.split(' ');
+
+	var pass = true;
+
+	// all words except the second word should be the same
+	for (var i = 0; i < pSplit.length; i++) {
+		if (i != 1 && pSplit[i] !== cSplit[i]) {
+			pass = false;
+		}
+	}
+
+	return pass;
+}
+
+function mergeFrSp(fr, sp) {
+	var indexOfDifference;
+
+	for (var i = 0; i < fr.length; i++) {
+		if (fr[i] !== sp[i]) {
+			indexOfDifference = i;
+			break;
+		}
+	}
+
+	return fr.substring(0, indexOfDifference) + 'Fren/Span' + fr.substring(indexOfDifference + 4);
 }
