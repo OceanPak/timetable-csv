@@ -65,30 +65,21 @@
 				<option value='b6'>Day B6</option>
 			</select>
 
-			<select ng-model='activityInput.startPeriod'>
-				<option value='' disabled selected>Starting period</option>
-				<option value='0'>Period 1</option>
-				<option value='1'>Period 2</option>
-				<option value='2'>Period 3</option>
-				<option value='3'>Period 4</option>
-				<option value='4'>Period 5</option>
-				<option value='6'>Lunch</option>
-				<option value='5'>Period 6</option>
-				<option value='7'>3:15 to 4:15</option>
-				<option value='8'>4:15 to 5:00</option>
+			<select ng-model='activityInput.startTime'>
+				<option value='' disabled selected>Start time</option>
+				<option value='0'>10:40 AM</option>
+				<option value='1'>11:05 AM</option>
+				<option value='2'>1:00 PM</option>
+				<option value='3'>3:15 PM</option>
 			</select>
 
-			<select ng-model='activityInput.endPeriod'>
-				<option value='' disabled selected>Ending period</option>
-				<option value='0'>Period 1</option>
-				<option value='1'>Period 2</option>
-				<option value='2'>Period 3</option>
-				<option value='3'>Period 4</option>
-				<option value='4'>Period 5</option>
-				<option value='6'>Lunch</option>
-				<option value='5'>Period 6</option>
-				<option value='7'>3:15 to 4:15</option>
-				<option value='8'>4:15 to 5:00</option>
+			<select ng-model='activityInput.endTime'>
+				<option value='' disabled selected>End time</option>
+				<option value='0'>11:05 AM</option>
+				<option value='1'>11:30 AM</option>
+				<option value='2'>1:40 PM</option>
+				<option value='3'>4:15 PM</option>
+				<option value='4'>5:00 PM</option>
 			</select>
 
 			<button type='button' ng-click='removeActivityInput(activityInput.id)'>-</button>

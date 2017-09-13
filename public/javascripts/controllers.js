@@ -10,7 +10,7 @@ angular.module('timetableCsv')
 
 		$scope.addActivityInput = function() {
 			inputIdCount++;
-			$scope.activityInputs.push({id: inputIdCount, name: '', location: '', day: '', startPeriod: '', endPeriod: ''});
+			$scope.activityInputs.push({id: inputIdCount, name: '', location: '', day: '', startTime: '', endTime: ''});
 		};
 
 		$scope.removeActivityInput = function(id) {
@@ -57,9 +57,9 @@ angular.module('timetableCsv')
 			for (var i = 0; i < $scope.activityInputs.length; i++) {
 				var input = $scope.activityInputs[i];
 
-				if (input.name == '' || input.day == '' || input.startPeriod == '' || input.endPeriod == '') {
+				if (input.name == '' || input.day == '' || input.startTime == '' || input.endTime == '') {
 					return 'Please fill in all the fields (except location, which is optional) for each of your activities.';
-				} else if (parseInt(input.startPeriod) > parseInt(input.endPeriod)) {
+				} else if (parseInt(input.endTime) < parseInt(input.startTime)) {
 					return 'Please make sure that all your activies end after they start.';
 				}
 			}

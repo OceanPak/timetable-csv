@@ -31,6 +31,8 @@ router.get('/', function(req, res, next) {
 
 router.post('/getcsv', function(req, res, next) {
 
+	console.log(req.body.activities);
+
 	if (req.body.role === 'teacher') {
 
 		var timetableObj = parseTeacherTimetable(req.body.timetable);
@@ -94,7 +96,7 @@ router.post('/getcsv', function(req, res, next) {
 		allEvents.forEach(function(i) {
 			masterstr += convertToCSV(i) + '\n';
 		});
-		
+
 	}
 
 
