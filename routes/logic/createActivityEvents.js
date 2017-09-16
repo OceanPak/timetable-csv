@@ -25,9 +25,6 @@ module.exports = function(activities, activitiesTimes, dates, dateRange) {
 		}
 	});
 
-	console.log(weekDayActivities);
-	console.log(cycleDayActivities);
-
 	// array to store all events
 	// outer layer: array of events
 	// middle layer: array of event properties (in order: subject, startDate,
@@ -56,7 +53,6 @@ module.exports = function(activities, activitiesTimes, dates, dateRange) {
 				});
 
 				// check cycleday and create corresponding events
-				console.log(cycleDayActivities[cycleDayIndex]);
 				cycleDayActivities[cycleDayIndex].forEach(function(activity) {
 					allEvents.push([activity.name,
 						formatJSONToDate(jsonDay),

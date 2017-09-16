@@ -33,9 +33,14 @@ router.get('/', function(req, res, next) {
 
 router.post('/getcsv', function(req, res, next) {
 
-	console.log(req.body.activities);
+	if (req.body.timetable === '') {
 
-	if (req.body.role === 'teacher') {
+		var allEvents = [
+			createActivityEvents(req.body.activities, activitiesTimes, dates, dateRange),
+			createActivityEvents(req.body.activities, activitiesTimes, choicesDates, dateRange)
+		];
+
+	} else if (req.body.role === 'teacher') {
 
 		var timetableObj = parseTeacherTimetable(req.body.timetable);
 
@@ -45,7 +50,8 @@ router.post('/getcsv', function(req, res, next) {
 			createPeriodEvents(timetableObj, teacherTimes, dates, dateRange),
 			createPeriodEvents(timetableObj, teacherChoicesTimes, choicesDates, dateRange),
 			createPeriodEvents(choicesTimetable, choicesTime, choicesDates, dateRange),
-			createActivityEvents(req.body.activities, activitiesTimes, dates, dateRange)
+			createActivityEvents(req.body.activities, activitiesTimes, dates, dateRange),
+			createActivityEvents(req.body.activities, activitiesTimes, choicesDates, dateRange)
 		];
 
 	} else if (req.body.role === 'dp') {
@@ -58,7 +64,8 @@ router.post('/getcsv', function(req, res, next) {
 			createPeriodEvents(timetableObj, dpTimes, dates, dateRange),
 			createPeriodEvents(timetableObj, dpChoicesTimes, choicesDates, dateRange),
 			createPeriodEvents(choicesTimetable, choicesTime, choicesDates, dateRange),
-			createActivityEvents(req.body.activities, activitiesTimes, dates, dateRange)
+			createActivityEvents(req.body.activities, activitiesTimes, dates, dateRange),
+			createActivityEvents(req.body.activities, activitiesTimes, choicesDates, dateRange)
 		];
 
 		// var cdates;
@@ -81,7 +88,8 @@ router.post('/getcsv', function(req, res, next) {
 			createPeriodEvents(timetableObj, mypTimes, dates, dateRange),
 			createPeriodEvents(timetableObj, mypChoicesTimes, choicesDates, dateRange),
 			createPeriodEvents(choicesTimetable, choicesTime, choicesDates, dateRange),
-			createActivityEvents(req.body.activities, activitiesTimes, dates, dateRange)
+			createActivityEvents(req.body.activities, activitiesTimes, dates, dateRange),
+			createActivityEvents(req.body.activities, activitiesTimes, choicesDates, dateRange)
 		];
 
 	}
