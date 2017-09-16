@@ -6,11 +6,13 @@ var convertjson = require('../controllers/convertjson.js');
 var generatecsv = require('../controllers/generatecsv.js');
 
 var convertToCSV = require('./logic/convertToCSV.js');
+var createActivityEvents = require('./logic/createActivityEvents.js');
 var createDayLabelEvents = require('./logic/createDayLabelEvents.js');
 var createPeriodEvents = require('./logic/createPeriodEvents.js');
 var parseStudentTimetable = require('./logic/parseStudentTimetable.js');
 var parseTeacherTimetable = require('./logic/parseTeacherTimetable.js');
 
+var activitiesTimes = require('./resources/activitiesTimes.json');
 var choicesDates = require('./resources/choicesDates.json');
 var choicesTime = require('./resources/choicesTime.json');
 var choicesTimetable = require('./resources/choicesTimetable.json');
@@ -42,14 +44,9 @@ router.post('/getcsv', function(req, res, next) {
 			createDayLabelEvents(timetableObj, choicesDates, cycleDayLabels, dateRange),
 			createPeriodEvents(timetableObj, teacherTimes, dates, dateRange),
 			createPeriodEvents(timetableObj, teacherChoicesTimes, choicesDates, dateRange),
-			createPeriodEvents(choicesTimetable, choicesTime, choicesDates, dateRange)
+			createPeriodEvents(choicesTimetable, choicesTime, choicesDates, dateRange),
+			createActivityEvents(req.body.activities, activitiesTimes, dates, dateRange)
 		];
-
-		var masterstr = 'Subject,Start Date,Start Time,End Date,End Time,All Day Event,Description,Location\n';
-
-		allEvents.forEach(function(i) {
-			masterstr += convertToCSV(i) + '\n';
-		});
 
 	} else if (req.body.role === 'dp') {
 
@@ -60,14 +57,9 @@ router.post('/getcsv', function(req, res, next) {
 			createDayLabelEvents(timetableObj, choicesDates, cycleDayLabels, dateRange),
 			createPeriodEvents(timetableObj, dpTimes, dates, dateRange),
 			createPeriodEvents(timetableObj, dpChoicesTimes, choicesDates, dateRange),
-			createPeriodEvents(choicesTimetable, choicesTime, choicesDates, dateRange)
+			createPeriodEvents(choicesTimetable, choicesTime, choicesDates, dateRange),
+			createActivityEvents(req.body.activities, activitiesTimes, dates, dateRange)
 		];
-
-		var masterstr = 'Subject,Start Date,Start Time,End Date,End Time,All Day Event,Description,Location\n';
-
-		allEvents.forEach(function(i) {
-			masterstr += convertToCSV(i) + '\n';
-		});
 
 		// var cdates;
 
@@ -88,17 +80,16 @@ router.post('/getcsv', function(req, res, next) {
 			createDayLabelEvents(timetableObj, choicesDates, cycleDayLabels, dateRange),
 			createPeriodEvents(timetableObj, mypTimes, dates, dateRange),
 			createPeriodEvents(timetableObj, mypChoicesTimes, choicesDates, dateRange),
-			createPeriodEvents(choicesTimetable, choicesTime, choicesDates, dateRange)
+			createPeriodEvents(choicesTimetable, choicesTime, choicesDates, dateRange),
+			createActivityEvents(req.body.activities, activitiesTimes, dates, dateRange)
 		];
-
-		var masterstr = 'Subject,Start Date,Start Time,End Date,End Time,All Day Event,Description,Location\n';
-
-		allEvents.forEach(function(i) {
-			masterstr += convertToCSV(i) + '\n';
-		});
 
 	}
 
+	var masterstr = 'Subject,Start Date,Start Time,End Date,End Time,All Day Event,Description,Location\n';
+	allEvents.forEach(function(i) {
+		masterstr += convertToCSV(i) + '\n';
+	});
 
 	res.set({'Content-Disposition': 'attachment; filename=\'timetable.csv\''});
 	res.send(masterstr);
