@@ -25,6 +25,7 @@ module.exports = function(input) {
 	var dayIndex = -1;
 	var fieldIndex = 8;
 	var isInsideField = false;
+	var atEndOfPeriod = false;
 
 	input.split('\n').forEach(function(field) {
 		// if end of a row is reached, then skip following day label and do nothing,
@@ -33,9 +34,15 @@ module.exports = function(input) {
 			fieldIndex = 0;
 			dayIndex++;
 		}
+		// if atEndOfPeriod, skip
+		else if (atEndOfPeriod) {
+			atEndOfPeriod = false;
+			return;
+		}
 		// if line is empty, then period is empty, nothing is added
 		else if (field === '') {
 			fieldIndex++;
+			atEndOfPeriod = true;
 		}
 		// check if isInsideField; assign to either index 0 or 1, and
 		// correspondingly increment or do not increment fieldIndex
@@ -55,6 +62,7 @@ module.exports = function(input) {
 			} else {
 				timetableObj[dayIndex][fieldIndex][1] = field;
 				isInsideField = false;
+				atEndOfPeriod = true;
 				fieldIndex++;
 			}
 		}

@@ -14,6 +14,7 @@ module.exports = function(input) {
 	}
 
 	// each class is written across three lines: class name, teacher, room
+	// each period is separated by one empty line
 	// periods with no classes are represented by two consecutive empty lines
 	// iterate through lines of each day string: if two lines are empty, then period
 	// is free; if not, then populate period fields
@@ -26,6 +27,7 @@ module.exports = function(input) {
 	var fieldIndex = 6;
 	var fieldLineCounter = 0;
 	var isInsideFree = false;
+	var atEndOfPeriod = false;
 
 	input.split('\n').forEach(function(field) {
 		// if end of a row is reached, then skip following day label and do nothing,
@@ -34,23 +36,30 @@ module.exports = function(input) {
 			fieldIndex = 0;
 			dayIndex++;
 		}
+		// if endOfPeriod reached, skip line
+		else if (atEndOfPeriod) {
+			atEndOfPeriod = false;
+			return;
+		}
 		// if line is empty and not currently inside a field, then check whether
 		// isInsideFree and increment fieldIndex accordingly
 		else if (field === '' && fieldLineCounter == 0) {
 			if (isInsideFree) {
 				fieldIndex++;
+				atEndOfPeriod = true;
 			}
 			isInsideFree = !isInsideFree;
 		}
 		// else, loop is inside a multiline period
 		// use fieldLineCounter to determine which index to populate
-		// if end of period is reached, reset fieldLineCounter and increment fieldIndex
+		// if end of period is reached, reset fieldLineCounter, increment fieldIndex, and toggle atEndOfPeriod
 		else {
 			timetableObj[dayIndex][fieldIndex][fieldLineCounter] = field;
 			fieldLineCounter++;
 			if (fieldLineCounter > 2) {
 				fieldLineCounter = 0;
 				fieldIndex++;
+				atEndOfPeriod = true;
 			}
 		}
 	});
