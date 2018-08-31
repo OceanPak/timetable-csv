@@ -34,7 +34,7 @@ router.get('/', function(req, res, next) {
 router.post('/getcsv', function(req, res, next) {
 
 	// console.log(JSON.stringify(req.body.timetable));
-
+	// test
 	if (req.body.timetable === '') {
 
 		var allEvents = [
