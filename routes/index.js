@@ -41,7 +41,7 @@ router.post('/getcsv', function(req, res, next) {
 			createActivityEvents(req.body.activities, activitiesTimes, choicesDates, dateRange)
 		];
 
-	} /*else if (req.body.role === 'teacher') {
+	} else if (req.body.role === 'teacher') {
 
 		var timetableObj = parseTeacherTimetable(req.body.timetable);
 
@@ -51,11 +51,11 @@ router.post('/getcsv', function(req, res, next) {
 			createPeriodEvents(timetableObj, teacherTimes, dates, dateRange),
 			createPeriodEvents(timetableObj, teacherChoicesTimes, choicesDates, dateRange),
 			createPeriodEvents(choicesTimetable, choicesTime, choicesDates, dateRange),
-			createActivityEvents(req.body.activities, activitiesTimes, dates, dateRange),
-			createActivityEvents(req.body.activities, activitiesTimes, choicesDates, dateRange)
+			//createActivityEvents(req.body.activities, activitiesTimes, dates, dateRange),
+			//createActivityEvents(req.body.activities, activitiesTimes, choicesDates, dateRange)
 		];
 
-	} */else if (req.body.role === 'dp') {
+	} else if (req.body.role === 'dp') {
 
 		var timetableObj = parseStudentTimetable(req.body.timetable);
 
