@@ -62,9 +62,9 @@ router.post('/getcsv', function(req, res, next) {
 		var allEvents = [
 			createDayLabelEvents(timetableObj, dates, cycleDayLabels, dateRange),
 			createDayLabelEvents(timetableObj, choicesDates, cycleDayLabels, dateRange),
-			//createPeriodEvents(timetableObj, dpTimes, dates, dateRange),
-			//createPeriodEvents(timetableObj, dpChoicesTimes, choicesDates, dateRange),
-			//createPeriodEvents(choicesTimetable, choicesTime, choicesDates, dateRange),
+			createPeriodEvents(timetableObj, dpTimes, dates, dateRange),
+			createPeriodEvents(timetableObj, dpChoicesTimes, choicesDates, dateRange),
+			createPeriodEvents(choicesTimetable, choicesTime, choicesDates, dateRange),
 			//createActivityEvents(req.body.activities, activitiesTimes, dates, dateRange),
 			//createActivityEvents(req.body.activities, activitiesTimes, choicesDates, dateRange)
 		];
