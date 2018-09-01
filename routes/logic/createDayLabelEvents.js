@@ -38,6 +38,7 @@ function formatJSONToDate(dateJSON) {
 	month = month.length > 1 ? month : '0' + month;
 	var day = dateObj.getDate().toString();
 	day = day.length > 1 ? day : '0' + day;
+	day = day + 1;
 	return month + '/' + day + '/' + year;
 }
 
