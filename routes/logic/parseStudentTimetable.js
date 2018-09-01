@@ -23,7 +23,7 @@ module.exports = function(input) {
 	// manually counting indicies
 	// fieldIndex is initialised to 6 to skip the first day label
 	// dayIndex is initialised to -1 to account for initial skip of day label
-	var dayIndex = -1;
+	var dayIndex = 0;
 	var fieldIndex = 6;
 	var fieldLineCounter = 0;
 	var isInsideFree = false;
