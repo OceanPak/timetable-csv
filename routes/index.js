@@ -79,7 +79,7 @@ router.post('/getcsv', function(req, res, next) {
 
 		// var masterstr = generatecsv(req.body.timetable, cdates, req.body.activities, req.body.role);
 
-	} /*else if (req.body.role === 'myp') {
+	} else if (req.body.role === 'myp') {
 
 		var timetableObj = parseStudentTimetable(req.body.timetable);
 
@@ -89,11 +89,11 @@ router.post('/getcsv', function(req, res, next) {
 			createPeriodEvents(timetableObj, mypTimes, dates, dateRange),
 			createPeriodEvents(timetableObj, mypChoicesTimes, choicesDates, dateRange),
 			createPeriodEvents(choicesTimetable, choicesTime, choicesDates, dateRange),
-			createActivityEvents(req.body.activities, activitiesTimes, dates, dateRange),
-			createActivityEvents(req.body.activities, activitiesTimes, choicesDates, dateRange)
+			//createActivityEvents(req.body.activities, activitiesTimes, dates, dateRange),
+			//createActivityEvents(req.body.activities, activitiesTimes, choicesDates, dateRange)
 		];
 
-	}*/
+	}
 
 	var masterstr = 'Subject,Start Date,Start Time,End Date,End Time,All Day Event,Description,Location\n';
 	allEvents.forEach(function(i) {
