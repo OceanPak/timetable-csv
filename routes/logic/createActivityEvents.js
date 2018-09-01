@@ -77,7 +77,7 @@ function formatJSONToDate(dateJSON) {
 	var year = dateObj.getFullYear();
 	var month = (1 + dateObj.getMonth()).toString();
 	month = month.length > 1 ? month : '0' + month;
-	var day = dateObj.getDate().toString();
+	var day = (1 + dateObj.getDate()).toString();
 	day = day.length > 1 ? day : '0' + day;
 	return month + '/' + day + '/' + year;
 }
