@@ -19,7 +19,7 @@ module.exports = function(timetableObj, periodTimes, dates, dateRange) {
 						// special case: if period is a teacher advisory, set startTime to 15 mins
 						// before what is written in periodTimes, to compensate for different
 						// advisory times
-						allEvents.push([period[0],
+						allEvents.push([period[0].replace(' 1819',''),
 							formatJSONToDate(jsonDay),
 							checkIfIsTeacherAdvisory(period, periodTimes[periodIndex][0], periodIndex),
 							formatJSONToDate(jsonDay),
